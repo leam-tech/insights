@@ -7,8 +7,8 @@ export default function getTkLEDChartOptions(datasets, options) {
 	var _valOnRadianMax = 1;
 
 
-	var led_on = 'http://insights.test:8008/assets/insights/images/led_on.png';
-	var led_off = 'http://insights.test:8008/assets/insights/images/led_off.png';
+	var led_on = window.location.origin + '/assets/insights/images/led_on.png';
+	var led_off = window.location.origin + '/assets/insights/images/led_off.png';
 
 
 	function renderItem(params, api) {

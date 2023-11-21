@@ -7,8 +7,8 @@ export default function getTkButtonChartOptions(datasets, options) {
 	var _valOnRadianMax = 1;
 
 
-	var button_pressed = 'http://insights.test:8008/assets/insights/images/button_pressed.png';
-	var button_released = 'http://insights.test:8008/assets/insights/images/button_released.png';
+	var button_pressed = window.location.origin + '/assets/insights/images/button_pressed.png';
+	var button_released = window.location.origin + '/assets/insights/images/button_released.png';
 
 	function renderItem(params, api) {
 		var imageStyle = {

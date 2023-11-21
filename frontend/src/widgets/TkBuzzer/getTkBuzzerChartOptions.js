@@ -7,8 +7,8 @@ export default function getTkBuzzerChartOptions(datasets, options) {
 	var _valOnRadianMax = 1;
 
 
-	var buzzer_on = 'http://insights.test:8008/assets/insights/images/buzzer_on.png';
-	var buzzer_off = 'http://insights.test:8008/assets/insights/images/buzzer_off.png';
+	var buzzer_on = window.location.origin + '/assets/insights/images/buzzer_on.png';
+	var buzzer_off = window.location.origin + '/assets/insights/images/buzzer_off.png';
 
 
 	function renderItem(params, api) {

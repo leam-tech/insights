@@ -6,8 +6,8 @@ export default function getTkToggleChartOptions(datasets, options) {
 	var _valOnRadianMax = 1;
 
 
-	var toggle_pressed = 'http://insights.test:8008/assets/insights/images/button_pressed.png';
-	var toggle_released = 'http://insights.test:8008/assets/insights/images/button_released.png';
+	var toggle_pressed = window.location.origin + '/assets/insights/images/button_pressed.png';
+	var toggle_released = window.location.origin + '/assets/insights/images/button_released.png';
 
 
 	function renderItem(params, api) {
