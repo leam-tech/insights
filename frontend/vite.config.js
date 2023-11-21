@@ -2,16 +2,21 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import frappeui from 'frappe-ui/vite'
 import path from 'path'
-import { defineConfig } from 'vite'
-import { webserver_port } from '../../../sites/common_site_config.json'
+import {defineConfig} from 'vite'
+import getProxyOptions from 'frappe-ui/vite'
+import {webserver_port} from '../../../sites/common_site_config.json'
 
 export default defineConfig({
 	plugins: [frappeui(), vue(), vueJsx()],
-	esbuild: { loader: 'tsx' },
+	esbuild: {loader: 'tsx'},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
 		},
+	},
+	server: {
+		port: 8080,
+		proxy: getProxyOptions({port: webserver_port}),
 	},
 	build: {
 		outDir: `../${path.basename(path.resolve('..'))}/public/frontend`,
