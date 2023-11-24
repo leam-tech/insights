@@ -93,6 +93,7 @@ export default function getBarChartOptions(datasets, options) {
 		polar: {},
 		series: [
 			{
+				name: 'Binary',
 				type: 'custom',
 				coordinateSystem: 'polar',
 				renderItem: renderItem

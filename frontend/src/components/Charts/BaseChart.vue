@@ -1,31 +1,37 @@
 <script setup>
 import * as echarts from 'echarts'
-import { onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
+import {onBeforeUnmount, onMounted, onUpdated, ref, watch} from 'vue'
 
 const props = defineProps({
-	title: { type: String, required: false },
-	subtitle: { type: String, required: false },
-	options: { type: Object, required: true },
+	title: {type: String, required: false},
+	subtitle: {type: String, required: false},
+	options: {type: Object, required: true},
 })
+
+const emits = defineEmits(['chartRef'])
 
 let eChart = null
 const chartRef = ref(null)
 onMounted(() => {
-	eChart = echarts.init(chartRef.value, 'light', { renderer: 'svg' })
+	eChart = echarts.init(chartRef.value, 'light', {renderer: 'svg'})
 	Object.keys(props.options).length && eChart.setOption(props.options)
 
 	const resizeObserver = new ResizeObserver(() => eChart.resize())
 	setTimeout(() => chartRef.value && resizeObserver.observe(chartRef.value), 1000)
 	onBeforeUnmount(() => chartRef.value && resizeObserver.unobserve(chartRef.value))
+
+	// Emit the chartRef
+	emits('chartRef', eChart)
 })
 
 watch(
 	() => props.options,
 	() => eChart && eChart.setOption(props.options),
-	{ deep: true }
+	{deep: true}
 )
 
-defineExpose({ downloadChart })
+defineExpose({downloadChart})
+
 function downloadChart() {
 	const image = new Image()
 	const type = 'png'
