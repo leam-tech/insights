@@ -47,6 +47,7 @@ export default function getTkButtonChartOptions(datasets, options) {
 		polar: {},
 		series: [
 			{
+				name: 'TkButton',
 				type: 'custom',
 				coordinateSystem: 'polar',
 				renderItem: renderItem
