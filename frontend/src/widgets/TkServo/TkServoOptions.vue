@@ -8,6 +8,7 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
 	modelValue: {type: Object, required: true},
 	columns: {type: Array, required: true},
+	data: {type: Object, required: true}
 })
 
 const options = computed({
@@ -72,6 +73,7 @@ const valueOptions = computed(() => {
 
 
 		<Color label="Color" v-model="options.color"/>
+
 
 	</div>
 </template>

@@ -23,9 +23,57 @@ export default function getTkServoChartOptions(datasets, options) {
 				endAngle: -20,
 				min: 0,
 				max: max_angle,
-				splitNumber: 12,
 				itemStyle: {
 					color
+				},
+				progress: {
+					show: true,
+					width: 40
+				},
+				pointer: {
+					show: false
+				},
+				axisLine: {
+					show: false
+				},
+				axisTick: {
+					show: false
+				},
+				splitLine: {
+					show: false
+				},
+				axisLabel: {
+					show: false
+				},
+				detail: {
+					valueAnimation: true,
+					width: '60%',
+					lineHeight: 40,
+					borderRadius: 8,
+					offsetCenter: [0, '-15%'],
+					fontSize: 60,
+					fontWeight: 'bolder',
+					formatter: '{value}°',
+					color,
+					show: true
+				},
+				data: [
+					{
+						value: angle
+					}
+				]
+			},
+			{
+				name: 'TkServoGauge',
+				type: 'gauge',
+				center: ['50%', '60%'],
+				startAngle: 200,
+				endAngle: -20,
+				min: 0,
+				max: max_angle,
+				splitNumber: 12,
+				itemStyle: {
+					color: '#e6ebf8',
 				},
 				progress: {
 					show: true,
@@ -67,57 +115,11 @@ export default function getTkServoChartOptions(datasets, options) {
 					show: false
 				},
 				detail: {
-					valueAnimation: true,
-					width: '60%',
-					lineHeight: 40,
-					borderRadius: 8,
-					offsetCenter: [0, '-15%'],
-					fontSize: 60,
-					fontWeight: 'bolder',
-					formatter: '{value}°',
-					color
-				},
-				data: [
-					{
-						value: angle
-					}
-				]
-			},
-			{
-				type: 'gauge',
-				center: ['50%', '60%'],
-				startAngle: 200,
-				endAngle: -20,
-				min: 0,
-				max: max_angle,
-				itemStyle: {
-					color
-				},
-				progress: {
-					show: true,
-					width: 8
-				},
-				pointer: {
-					show: false
-				},
-				axisLine: {
-					show: false
-				},
-				axisTick: {
-					show: false
-				},
-				splitLine: {
-					show: false
-				},
-				axisLabel: {
-					show: false
-				},
-				detail: {
 					show: false
 				},
 				data: [
 					{
-						value: angle
+						value: max_angle
 					}
 				]
 			}
