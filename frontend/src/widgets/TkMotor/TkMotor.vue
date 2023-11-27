@@ -1,7 +1,8 @@
 <script setup>
 import BaseChart from '@/components/Charts/BaseChart.vue'
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 import getTkMotorChartOptions from './getTkMotorChartOptions'
+import Checkbox from '@/components/Controls/Checkbox.vue'
 
 const props = defineProps({
 	data: {type: Object, required: true},
@@ -23,8 +24,71 @@ const datasets = computed(() => {
 const TKMotorChartOptions = computed(() => {
 	return getTkMotorChartOptions(datasets.value, props.options)
 })
+
+const chartRef = ref(null)
+
+const onChartRef = (ref) => {
+	chartRef.value = ref
+}
+
+const handleSpeedChange = (key, value) => {
+	if (!datasets.value) return
+
+	const currentDate = new Date();
+	const year = currentDate.getFullYear();
+	const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // months are zero-based
+	const day = String(currentDate.getDate()).padStart(2, '0');
+	const hours = String(currentDate.getHours()).padStart(2, '0');
+	const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+	const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+	const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+	chartRef.value.setOption(
+		getTkMotorChartOptions(
+			{
+				timestamp: formattedDateTime,
+				direction: key === 'direction' ? parseInt(value) ? 'forward' : 'reverse' : datasets.value.direction,
+				max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
+				speed: key === 'value' ? parseInt(value) : datasets.value.speed,
+			},
+			props.options,
+		),
+	)
+}
+
+
 </script>
 
 <template>
-	<BaseChart :title="props.options.title" :options="TKMotorChartOptions"/>
+	<div>
+		<div>
+			<Checkbox
+				v-if="datasets !== undefined"
+				label="Direction"
+				:modelValue="datasets.direction === 'forward'"
+				@update:modelValue="handleSpeedChange('direction', $event)"
+			/>
+			<Input
+				v-if="datasets !== undefined"
+				type="number"
+				label="Max Speed Value"
+				placeholder="Max Speed Value"
+				class="w-50"
+				:modelValue="datasets.max_speed"
+				@update:modelValue="handleSpeedChange('max_speed', $event)"
+			/>
+		</div>
+		<div>
+			<Input
+				v-if="datasets !== undefined"
+				type="number"
+				label="Speed Value"
+				placeholder="Speed Value"
+				class="w-50"
+				:modelValue="datasets.speed"
+				@update:modelValue="handleSpeedChange('value', $event)"
+			/>
+		</div>
+	</div>
+	<BaseChart :title="props.options.title" :options="TKMotorChartOptions" @chartRef="onChartRef"/>
 </template>
