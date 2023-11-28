@@ -18,6 +18,7 @@ from insights.insights.doctype.insights_team.insights_team import (
     get_permission_filter,
 )
 from insights.utils import detect_encoding
+from .widget_value_update import widget_value_update
 
 
 @frappe.whitelist()

@@ -1,7 +1,6 @@
 <script setup>
 
 import Color from '@/components/Controls/Color.vue'
-import ListPicker from '@/components/Controls/ListPicker.vue'
 import {FIELDTYPES} from '@/utils'
 import {computed} from 'vue'
 

@@ -2,6 +2,7 @@
 import BaseChart from '@/components/Charts/BaseChart.vue'
 import {computed, onMounted, onUnmounted, ref} from 'vue'
 import getBinaryChartOptions from './getBinaryChartOptions'
+import {call} from "frappe-ui";
 
 const chartRef = ref(null)
 
@@ -49,8 +50,16 @@ onMounted(() => {
 		const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 		const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
+
+		call('insights.api.widget_value_update', {
+			type: 'Binary',
+			binary_value: value,
+			timestamp: formattedDateTime,
+		})
+
 		/**
 		 * Update the chart
+		 * comment me out to disable instant chart update
 		 */
 		chartRef.value.setOption(
 			getBinaryChartOptions(
