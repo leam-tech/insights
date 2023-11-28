@@ -2,6 +2,7 @@
 import BaseChart from '@/components/Charts/BaseChart.vue'
 import {computed, onMounted, onUnmounted, ref} from 'vue'
 import getTkServoChartOptions from './getTkServoChartOptions'
+import {call} from "frappe-ui";
 
 const props = defineProps({
 	data: {type: Object, required: true},
@@ -94,6 +95,13 @@ const handleAngleChange = (type, value) => {
 			props.options
 		)
 	);
+
+	call('insights.api.widget_value_update', {
+		type: 'TkServo',
+		max_angle: type === 'max_angle' ? parseInt(value) : datasets.value.max_angle,
+		angle: type === 'value' ? parseInt(value) : datasets.value.angle,
+		timestamp: formattedDateTime,
+	})
 }
 
 </script>

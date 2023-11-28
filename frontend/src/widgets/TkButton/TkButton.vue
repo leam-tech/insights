@@ -2,6 +2,7 @@
 import BaseChart from '@/components/Charts/BaseChart.vue'
 import {computed, onMounted, onUnmounted, ref} from 'vue'
 import getTkButtonChartOptions from './getTkButtonChartOptions'
+import {call} from "frappe-ui";
 
 const props = defineProps({
 	data: {type: Object, required: true},
@@ -29,6 +30,12 @@ onMounted(() => {
 		const minutes = String(currentDate.getMinutes()).padStart(2, '0');
 		const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 		const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+		call('insights.api.widget_value_update', {
+			type: 'TkButton',
+			button_value: value,
+			timestamp: formattedDateTime,
+		})
 
 		chartRef.value.setOption(
 			getTkButtonChartOptions(

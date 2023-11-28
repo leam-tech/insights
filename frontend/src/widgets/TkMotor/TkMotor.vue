@@ -3,6 +3,7 @@ import BaseChart from '@/components/Charts/BaseChart.vue'
 import {computed, ref} from 'vue'
 import getTkMotorChartOptions from './getTkMotorChartOptions'
 import Checkbox from '@/components/Controls/Checkbox.vue'
+import {call} from "frappe-ui";
 
 const props = defineProps({
 	data: {type: Object, required: true},
@@ -43,6 +44,7 @@ const handleSpeedChange = (key, value) => {
 	const seconds = String(currentDate.getSeconds()).padStart(2, '0');
 	const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
+
 	chartRef.value.setOption(
 		getTkMotorChartOptions(
 			{
@@ -54,6 +56,14 @@ const handleSpeedChange = (key, value) => {
 			props.options,
 		),
 	)
+
+	call('insights.api.widget_value_update', {
+		type: 'TkMotor',
+		timestamp: formattedDateTime,
+		direction: key === 'direction' ? parseInt(value) ? 'forward' : 'reverse' : datasets.value.direction,
+		max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
+		speed: key === 'value' ? parseInt(value) : datasets.value.speed,
+	})
 }
 
 
