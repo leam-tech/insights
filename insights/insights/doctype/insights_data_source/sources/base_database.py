@@ -70,6 +70,7 @@ class BaseDatabase:
         sql = self.set_row_limit(sql)
 
         self.validate_native_sql(sql)
+        sql = self.set_customer_filter(sql)
 
         if cached:
             cached_results = get_cached_results(sql, self.data_source)
@@ -84,6 +85,27 @@ class BaseDatabase:
             ret = [cols] + rows if return_columns else rows
             cached and cache_results(sql, self.data_source, ret)
             return ret
+
+    @staticmethod
+    def set_customer_filter(sql):
+        # if the logged in user has System Manager role, don't apply customer filter
+        # Also if the logged in user is Administrator, don't apply customer filter
+        if (frappe.session.user == "Administrator") or ("System Manager" in frappe.get_roles()):
+            return sql
+        # get the api_key from user doc
+        user = frappe.session.user
+        doc = frappe.get_doc("User", user)
+        api_key = doc.api_key
+
+        # login as api user
+        _login_sql = f"""select public.login_as('{user}', true);"""
+        sql = _login_sql + sql
+
+        # lets set session variable to the api key and api user
+        _session_sql = f"""SET session "me.frappe_api_key" = '{api_key}';"""
+
+        sql = _session_sql + sql
+        return sql
 
     def compile_query(self, query):
         if hasattr(query, "compile"):
