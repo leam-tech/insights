@@ -49,7 +49,7 @@ const handleSpeedChange = (key, value) => {
 		getTkMotorChartOptions(
 			{
 				timestamp: formattedDateTime,
-				direction: key === 'direction' ? parseInt(value) ? 'forward' : 'reverse' : datasets.value.direction,
+				direction: key === 'direction' ? parseInt(value) ? 'forward' : 'backward' : datasets.value.direction,
 				max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
 				speed: key === 'value' ? parseInt(value) : datasets.value.speed,
 			},
@@ -60,7 +60,7 @@ const handleSpeedChange = (key, value) => {
 	call('insights.api.widget_value_update', {
 		type: 'TkMotor',
 		timestamp: formattedDateTime,
-		direction: key === 'direction' ? parseInt(value) ? 'forward' : 'reverse' : datasets.value.direction,
+		direction: key === 'direction' ? parseInt(value) ? 'forward' : 'backward' : datasets.value.direction,
 		max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
 		speed: key === 'value' ? parseInt(value) : datasets.value.speed,
 	})
