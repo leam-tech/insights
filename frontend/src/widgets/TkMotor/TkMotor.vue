@@ -58,13 +58,35 @@ const handleSpeedChange = (key, value) => {
 		),
 	)
 
+	let action = datasets.value.direction.toUpperCase();
+	let speed = datasets.value.speed;
+	if (key === 'value') {
+		speed = parseFloat(value);
+		action = speed > 0 ? 'FORWARD' : 'BACKWARD';
+	} else if (key === 'direction') {
+		if (value) {
+			action = 'FORWARD';
+		} else {
+			action = 'BACKWARD';
+		}
+	}
+
+	speed = Math.abs(speed);
+	if (speed > 1) {
+		speed = 1;
+	} else if (speed == 0) {
+		action = 'STOP';
+	}
+
 	call('insights.api.widget_value_update', {
 		device_id: datasets.value.device_id,
 		type: 'TkMotor',
 		timestamp: formattedDateTime,
-		direction: key === 'direction' ? parseInt(value) ? 'forward' : 'backward' : datasets.value.direction,
-		max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
-		speed: key === 'value' ? parseInt(value) : datasets.value.speed,
+		command: {
+			device_id: datasets.value.device_id,
+			action,
+			speed
+		},
 	})
 }
 
@@ -86,6 +108,7 @@ const handleSpeedChange = (key, value) => {
 				label="Max Speed Value"
 				placeholder="Max Speed Value"
 				class="w-50"
+				disabled
 				:modelValue="datasets.max_speed"
 				@update:modelValue="handleSpeedChange('max_speed', $event)"
 			/>
