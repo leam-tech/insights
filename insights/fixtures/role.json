@@ -37,6 +37,7 @@
 	 "search_bar": 0,
 	 "timeline": 0,
 	 "two_factor_auth": 0,
-	 "view_switcher": 0
+	 "view_switcher": 0,
+     "home_page": "/insights"
 	}
  ]
