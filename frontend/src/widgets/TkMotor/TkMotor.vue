@@ -12,9 +12,10 @@ const props = defineProps({
 
 
 const datasets = computed(() => {
-	if (!props.data?.length || !props.options.direction || !props.options.max_speed || !props.options.speed || !props.options.timestamp) return
+	if (!props.data?.length || !props.options.device_id || !props.options.direction || !props.options.max_speed || !props.options.speed || !props.options.timestamp) return
 
 	return {
+		device_id: props.data[0][props.options.device_id],
 		direction: props.data[0][props.options.direction],
 		max_speed: props.data[0][props.options.max_speed],
 		speed: props.data[0][props.options.speed],
@@ -58,6 +59,7 @@ const handleSpeedChange = (key, value) => {
 	)
 
 	call('insights.api.widget_value_update', {
+		device_id: datasets.value.device_id,
 		type: 'TkMotor',
 		timestamp: formattedDateTime,
 		direction: key === 'direction' ? parseInt(value) ? 'forward' : 'backward' : datasets.value.direction,
