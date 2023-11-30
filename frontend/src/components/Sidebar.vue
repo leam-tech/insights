@@ -173,13 +173,13 @@ const sidebarItems = ref([
 		name: 'Notebook',
 		current: false,
 	},
-	{
-		path: '/settings',
-		label: 'Settings',
-		icon: Settings,
-		name: 'Settings',
-		current: false,
-	},
+	// {
+	// 	path: '/settings',
+	// 	label: 'Settings',
+	// 	icon: Settings,
+	// 	name: 'Settings',
+	// 	current: false,
+	// },
 ])
 
 watch(
