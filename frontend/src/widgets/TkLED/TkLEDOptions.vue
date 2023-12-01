@@ -53,6 +53,10 @@ const valueOptions = computed(() => {
 			placeholder="Title"
 		/>
 		<div>
+			<span class="mb-2 block text-sm leading-4 text-gray-700">Device ID</span>
+			<Autocomplete v-model="options.device_id" :returnValue="true" :options="indexOptions"/>
+		</div>
+		<div>
 			<span class="mb-2 block text-sm leading-4 text-gray-700">Timestamp</span>
 			<Autocomplete v-model="options.timestamp" :returnValue="true" :options="dateTimeOptions"/>
 		</div>

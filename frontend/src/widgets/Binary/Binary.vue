@@ -13,11 +13,12 @@ const props = defineProps({
 })
 
 const datasets = computed(() => {
-	if (!props.data?.length || !props.options.value || !props.options.timestamp) return
+	if (!props.data?.length || !props.options.device_id || !props.options.value || !props.options.timestamp) return
 
 	return {
 		value: props.data[0][props.options.value],
 		timestamp: props.data[0][props.options.timestamp],
+		device_id: props.data[0][props.options.device_id],
 	}
 })
 
@@ -55,6 +56,7 @@ onMounted(() => {
 			type: 'Binary',
 			binary_value: value,
 			timestamp: formattedDateTime,
+			device_id: datasets.value.device_id,
 		})
 
 		/**

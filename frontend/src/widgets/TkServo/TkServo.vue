@@ -11,12 +11,13 @@ const props = defineProps({
 
 
 const datasets = computed(() => {
-	if (!props.data?.length || !props.options.max_angle || !props.options.angle || !props.options.timestamp) return
+	if (!props.data?.length || !props.options.max_angle || !props.options.angle || !props.options.timestamp || !props.options.device_id) return
 
 	return {
 		max_angle: props.data[0][props.options.max_angle],
 		angle: props.data[0][props.options.angle],
 		timestamp: props.data[0][props.options.timestamp],
+		device_id: props.data[0][props.options.device_id],
 	}
 })
 
@@ -101,6 +102,7 @@ const handleAngleChange = (type, value) => {
 		max_angle: type === 'max_angle' ? parseInt(value) : datasets.value.max_angle,
 		angle: type === 'value' ? parseInt(value) : datasets.value.angle,
 		timestamp: formattedDateTime,
+		device_id: datasets.value.device_id,
 	})
 }
 
