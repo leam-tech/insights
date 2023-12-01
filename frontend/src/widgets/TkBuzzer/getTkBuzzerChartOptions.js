@@ -48,6 +48,7 @@ export default function getTkBuzzerChartOptions(datasets, options) {
 		polar: {},
 		series: [
 			{
+				name: 'TkBuzzer',
 				type: 'custom',
 				coordinateSystem: 'polar',
 				renderItem: renderItem

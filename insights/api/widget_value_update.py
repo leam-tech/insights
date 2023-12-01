@@ -23,7 +23,7 @@ def widget_value_update(*args, **kwargs):
     => {type: str, speed: int, timestamp: str, max_speed: int}
 
     """
-    valid_types = ("Binary", "TkButton", "TkServo", "TkMotor")
+    valid_types = ("Binary", "TkButton", "TkServo", "TkMotor", "TkBuzzer")
 
     if kwargs.get("type") not in valid_types:
         frappe.throw("Invalid type")
