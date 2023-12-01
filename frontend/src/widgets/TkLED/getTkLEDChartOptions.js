@@ -55,6 +55,7 @@ export default function getTkLEDChartOptions(datasets, options) {
 		polar: {},
 		series: [
 			{
+				name: 'TkLED',
 				type: 'custom',
 				coordinateSystem: 'polar',
 				renderItem: renderItem
