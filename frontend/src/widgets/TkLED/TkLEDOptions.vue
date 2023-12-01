@@ -16,12 +16,12 @@ const options = computed({
 
 const indexOptions = computed(() => {
 	return props.columns
-		?.filter((column) => !FIELDTYPES.NUMBER.includes(column.type))
-		.map((column) => ({
-			label: column.label,
-			value: column.label,
-			description: column.type,
-		}))
+		?.filter((column) => !FIELDTYPES.DATE.includes(column.type) && !FIELDTYPES.NUMBER.includes(column.type))
+			.map((column) => ({
+				label: column.label,
+				value: column.label,
+				description: column.type,
+			}))
 })
 const dateTimeOptions = computed(() => {
 	return props.columns
