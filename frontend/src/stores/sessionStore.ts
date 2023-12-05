@@ -12,6 +12,7 @@ const emptyUser: User = {
 	is_user: false,
 	country: '',
 	locale: 'en-US',
+	api_key: '',
 }
 
 const sessionStore = defineStore('insights:session', function () {

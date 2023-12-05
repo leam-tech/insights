@@ -14,6 +14,7 @@ interface User {
 	is_user: boolean
 	country: string
 	locale: string
+	api_key: string
 }
 
 interface Session {

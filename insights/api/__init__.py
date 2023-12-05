@@ -226,7 +226,7 @@ def get_user_info():
         {"parent": frappe.session.user, "role": ["in", ("Insights User", "System Manager")]},
     )
 
-    user = frappe.db.get_value("User", frappe.session.user, ["first_name", "last_name"], as_dict=1)
+    user = frappe.db.get_value("User", frappe.session.user, ["first_name", "last_name", "api_key"], as_dict=1)
 
     return {
         "user_id": frappe.session.user,
@@ -237,6 +237,7 @@ def get_user_info():
         # TODO: move to `get_session_info` since not user specific
         "country": frappe.db.get_single_value("System Settings", "country"),
         "locale": frappe.db.get_single_value("System Settings", "language"),
+        "api_key": user.get("api_key"),
     }
 
 
