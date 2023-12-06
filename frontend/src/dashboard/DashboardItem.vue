@@ -3,13 +3,13 @@ import UsePopover from '@/components/UsePopover.vue'
 import InvalidWidget from '@/widgets/InvalidWidget.vue'
 import useChartData from '@/widgets/useChartData'
 import widgets from '@/widgets/widgets'
-import { watchDebounced, whenever } from '@vueuse/shared'
-import { computed, inject, provide, reactive, ref, watch } from 'vue'
+import {watchDebounced, whenever} from '@vueuse/shared'
+import {computed, inject, provide, reactive, ref, watch} from 'vue'
 import DashboardItemActions from './DashboardItemActions.vue'
 
 const dashboard = inject('dashboard')
 const props = defineProps({
-	item: { type: Object, required: true },
+	item: {type: Object, required: true},
 })
 
 let isChart = dashboard.isChart(props.item)
@@ -23,7 +23,7 @@ if (isChart) {
 		},
 	})
 	// load chart data
-	whenever(query, () => chartData.load(query.value), { immediate: true })
+	whenever(query, () => chartData.load(query.value), {immediate: true})
 	dashboard.onRefresh(() => chartData.load(query.value))
 	dashboard.refreshChartFilters(props.item.item_id)
 	watch(chartFilters, () => chartData.load(props.item.options.query))
@@ -78,7 +78,7 @@ function openQueryInNewTab() {
 				v-if="chartData.loading"
 				class="absolute inset-0 z-[10000] flex h-full w-full items-center justify-center rounded bg-white"
 			>
-				<LoadingIndicator class="w-6 text-gray-300" />
+				<LoadingIndicator class="w-6 text-gray-300"/>
 			</div>
 
 			<component
@@ -107,7 +107,7 @@ function openQueryInNewTab() {
 							class="flex items-center space-x-1 rounded-full bg-gray-100 px-2 py-1 text-sm leading-3 text-gray-600"
 						>
 							<span>{{ chartFilters.length }}</span>
-							<FeatherIcon name="filter" class="h-3 w-3" @mousedown.prevent.stop="" />
+							<FeatherIcon name="filter" class="h-3 w-3" @mousedown.prevent.stop=""/>
 						</div>
 					</Tooltip>
 				</div>
@@ -130,7 +130,7 @@ function openQueryInNewTab() {
 			:show="dashboard.editing && dashboard.currentItem?.item_id === item.item_id"
 			placement="top-end"
 		>
-			<DashboardItemActions :item="item" />
+			<DashboardItemActions :item="item"/>
 		</UsePopover>
 	</div>
 </template>

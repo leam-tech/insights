@@ -26,9 +26,11 @@ export default function useChartData(options = {}) {
 		error: null,
 	})
 
-	function load(query) {
+	function load(query, explictReload = false) {
 		if (!query) return
-		state.loading = true
+		if (explictReload) {
+			state.loading = true
+		}
 		options.resultsFetcher().then((results) => {
 			state.loading = false
 			const formattedResults = getFormattedResult(results)

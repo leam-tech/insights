@@ -3,10 +3,10 @@ import VueGridLayout from '@/dashboard/VueGridLayout.vue'
 import useDashboard from '@/dashboard/useDashboard'
 import BaseLayout from '@/layouts/BaseLayout.vue'
 import ContentEditable from '@/notebook/ContentEditable.vue'
-import { updateDocumentTitle } from '@/utils'
+import {updateDocumentTitle} from '@/utils'
 import widgets from '@/widgets/widgets'
-import { debounce } from 'frappe-ui'
-import { computed, provide, ref } from 'vue'
+import {debounce} from 'frappe-ui'
+import {computed, provide, ref} from 'vue'
 import DashboardEmptyState from './DashboardEmptyState.vue'
 import DashboardItem from './DashboardItem.vue'
 import DashboardNavbarButtons from './DashboardNavbarButtons.vue'
@@ -15,13 +15,14 @@ import DashboardSidebarWidgets from './DashboardWidgetsOptions.vue'
 import UseDropZone from './UseDropZone.vue'
 
 const props = defineProps({
-	name: { type: String, required: true },
+	name: {type: String, required: true},
 })
 
 const dashboard = useDashboard(props.name)
 provide('dashboard', dashboard)
 
 const draggingWidget = ref(false)
+
 function addWidget(dropEvent) {
 	const initialXandY = calcInitialXY(dropEvent)
 	draggingWidget.value = false
@@ -40,7 +41,8 @@ function addWidget(dropEvent) {
 }
 
 const gridLayout = ref(null)
-function calcInitialXY({ x, y }) {
+
+function calcInitialXY({x, y}) {
 	const colWidth = gridLayout.value.getBoundingClientRect().width / 20
 	const rowHeight = 30
 	return {
@@ -58,6 +60,7 @@ const pageMeta = computed(() => {
 updateDocumentTitle(pageMeta)
 
 const debouncedUpdateTitle = debounce((value) => dashboard.updateTitle(value), 500)
+
 </script>
 
 <template>
@@ -73,7 +76,7 @@ const debouncedUpdateTitle = debounce((value) => dashboard.updateTitle(value), 5
 					placeholder="Untitled Dashboard"
 				></ContentEditable>
 			</div>
-			<DashboardNavbarButtons />
+			<DashboardNavbarButtons/>
 		</template>
 
 		<template #content>
@@ -101,7 +104,7 @@ const debouncedUpdateTitle = debounce((value) => dashboard.updateTitle(value), 5
 						v-model:layouts="dashboard.itemLayouts"
 					>
 						<template #item="{ item }">
-							<DashboardItem :item="item" :key="item.item_id" />
+							<DashboardItem :item="item" :key="item.item_id"/>
 						</template>
 					</VueGridLayout>
 
@@ -117,7 +120,7 @@ const debouncedUpdateTitle = debounce((value) => dashboard.updateTitle(value), 5
 			<div class="w-[21rem] overflow-scroll border-l bg-white p-3 px-4 shadow-sm">
 				<div v-if="!dashboard.currentItem">
 					<div class="mb-3 font-semibold text-gray-800">Widgets</div>
-					<DashboardSidebarWidgets @dragChange="draggingWidget = $event" />
+					<DashboardSidebarWidgets @dragChange="draggingWidget = $event"/>
 				</div>
 
 				<div v-else class="space-y-4">
