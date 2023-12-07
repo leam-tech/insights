@@ -32,37 +32,14 @@ const onChartRef = (ref) => {
 }
 
 onMounted(() => {
-	if (!datasets.value) return
-
-	chartRef.value.on('click', {seriesName: 'TkLED'}, function (args) {
-		const value = args.value[1] === 1 ? 0 : 1
-
-		const currentDate = new Date();
-		const year = currentDate.getFullYear();
-		const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // months are zero-based
-		const day = String(currentDate.getDate()).padStart(2, '0');
-		const hours = String(currentDate.getHours()).padStart(2, '0');
-		const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-		const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-		const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
+	chartRef.value.on('click', { seriesName: 'TkLED' }, function (args) {
 		call('insights.api.widget_value_update', {
-			type: 'TkLED',
-			led_value: value,
-			timestamp: formattedDateTime,
 			device_id: datasets.value.device_id,
+			type: 'TkLED',
+			command: {
+				action: 'TOGGLE',
+			},
 		})
-
-		chartRef.value.setOption(
-			getTkLEDChartOptions(
-				{
-					value,
-					timestamp: formattedDateTime,
-					device_id: datasets.value.device_id,
-				},
-				props.options
-			)
-		);
 	});
 })
 

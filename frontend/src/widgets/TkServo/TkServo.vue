@@ -74,35 +74,22 @@ const onChartRef = (ref) => {
 // })
 
 const handleAngleChange = (type, value) => {
-	if (!datasets.value) return
 
-	const currentDate = new Date();
-	const year = currentDate.getFullYear();
-	const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // months are zero-based
-	const day = String(currentDate.getDate()).padStart(2, '0');
-	const hours = String(currentDate.getHours()).padStart(2, '0');
-	const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-	const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-	const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+	if (type !== 'value') {
+		return;
+	}
 
-
-	chartRef.value.setOption(
-		getTkServoChartOptions(
-			{
-				max_angle: type === 'max_angle' ? parseInt(value) : datasets.value.max_angle,
-				angle: type === 'value' ? parseInt(value) : datasets.value.angle,
-				timestamp: formattedDateTime,
-			},
-			props.options
-		)
-	);
+	const action = 'SET_ANGLE';
+	const angle = parseFloat(value);
 
 	call('insights.api.widget_value_update', {
-		type: 'TkServo',
-		max_angle: type === 'max_angle' ? parseInt(value) : datasets.value.max_angle,
-		angle: type === 'value' ? parseInt(value) : datasets.value.angle,
-		timestamp: formattedDateTime,
 		device_id: datasets.value.device_id,
+		type: 'TkServo',
+		command: {
+			device_id: datasets.value.device_id,
+			action,
+			angle
+		},
 	})
 }
 

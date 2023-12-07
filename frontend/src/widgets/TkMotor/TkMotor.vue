@@ -36,28 +36,6 @@ const onChartRef = (ref) => {
 const handleSpeedChange = (key, value) => {
 	if (!datasets.value) return
 
-	const currentDate = new Date();
-	const year = currentDate.getFullYear();
-	const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // months are zero-based
-	const day = String(currentDate.getDate()).padStart(2, '0');
-	const hours = String(currentDate.getHours()).padStart(2, '0');
-	const minutes = String(currentDate.getMinutes()).padStart(2, '0');
-	const seconds = String(currentDate.getSeconds()).padStart(2, '0');
-	const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-
-	chartRef.value.setOption(
-		getTkMotorChartOptions(
-			{
-				timestamp: formattedDateTime,
-				direction: key === 'direction' ? parseInt(value) ? 'forward' : 'backward' : datasets.value.direction,
-				max_speed: key === 'max_speed' ? parseInt(value) : datasets.value.max_speed,
-				speed: key === 'value' ? parseInt(value) : datasets.value.speed,
-			},
-			props.options,
-		),
-	)
-
 	let action = datasets.value.direction.toUpperCase();
 	let speed = datasets.value.speed;
 	if (key === 'value') {
@@ -81,7 +59,6 @@ const handleSpeedChange = (key, value) => {
 	call('insights.api.widget_value_update', {
 		device_id: datasets.value.device_id,
 		type: 'TkMotor',
-		timestamp: formattedDateTime,
 		command: {
 			device_id: datasets.value.device_id,
 			action,
